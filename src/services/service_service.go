@@ -2,17 +2,12 @@ package services
 
 import (
 	"github.com/B1gDaddyKane/golangBackend/src/dao"
+	"github.com/B1gDaddyKane/golangBackend/src/errors"
 	"github.com/B1gDaddyKane/golangBackend/src/model"
 )
 
-func GetServices() ([]model.Service, error) {
-	services, err := dao.GetServices()
-
-	if err != nil {
-		return nil, err
-	}
-
-	return services, nil
+func GetServices() ([]*model.Service, *errors.AppError) {
+	return dao.GetServices()
 }
 
 func GetServiceById(serviceId int) (*model.Service, error) {
