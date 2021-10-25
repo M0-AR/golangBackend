@@ -25,10 +25,11 @@ func handleRequest() {
 	router.HandleFunc("/signUp", signUp)
 
 	// Dashboard -> Service
-	router.HandleFunc("/dashboard/services", controllers.GetServices).Methods("GET")
-	router.HandleFunc("/dashboard/services/{id}", controllers.GetServiceById).Methods("GET")
+	// Todo: Can't not differentiate between these to GET method
+	//router.HandleFunc("/dashboard/services", controllers.GetServices).Methods("GET")
+	router.HandleFunc("/dashboard/services", controllers.GetServiceById).Methods("GET")
 
-	fmt.Print("Server start at PORT 10000")
+	fmt.Print("Server start at PORT 10000\n")
 	log.Fatal(http.ListenAndServe(":10000", router))
 }
 

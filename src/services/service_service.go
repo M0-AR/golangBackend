@@ -10,12 +10,6 @@ func GetServices() ([]*model.Service, *errors.AppError) {
 	return dao.GetServices()
 }
 
-func GetServiceById(serviceId int64) (*model.Service, error) {
-	service, err := dao.GetServicesById(serviceId)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return service, nil
+func GetServiceById(serviceId int64) (*model.Service, *errors.AppError) {
+	return dao.GetServicesById(serviceId)
 }

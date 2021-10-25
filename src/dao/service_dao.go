@@ -28,11 +28,15 @@ func GetServices() ([]*model.Service, *errors.AppError) {
 	}
 }
 
-func GetServicesById(serviceId int64) (*model.Service, error) {
+func GetServicesById(serviceId int64) (*model.Service, *errors.AppError) {
 	for _, item := range services {
 		if item.ID == serviceId {
 			return item, nil
 		}
 	}
-	return nil, fmt.Errorf("service id not found")
+	return nil, &errors.AppError{
+		Message:    fmt.Sprintf("Service %v was not found", serviceId),
+		StatusCode: http.StatusNotFound,
+		Status:     "not_found",
+	}
 }
