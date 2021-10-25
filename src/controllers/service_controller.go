@@ -8,11 +8,12 @@ import (
 
 // GetServices Get all services
 func GetServices(response http.ResponseWriter, request *http.Request) {
-	services, err := services.GetServices()
+	services, apiErr := services.GetServices()
 
-	if err != nil {
-		response.WriteHeader(http.StatusNotFound) // Todo
-		response.Write([]byte(err.Error()))
+	if apiErr != nil {
+		jsonValue, _ := json.Marshal(apiErr)
+		response.WriteHeader(apiErr.StatusCode)
+		response.Write(jsonValue)
 		return
 	}
 
