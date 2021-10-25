@@ -6,7 +6,7 @@ import (
 
 // Service represents data about a record Service.
 type Service struct {
-	ID               int       `json:"id"`
+	ID               int64     `json:"id"`
 	Title            string    `json:"title"`
 	Price            float64   `json:"price"`
 	ImageUrl         string    `json:"image_url"`
