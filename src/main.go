@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -9,6 +10,7 @@ import (
 	"github.com/B1gDaddyKane/golangBackend/database"
 	"github.com/B1gDaddyKane/golangBackend/middleware"
 	"github.com/B1gDaddyKane/golangBackend/models"
+	"github.com/B1gDaddyKane/golangBackend/src/controllers"
 	"github.com/gorilla/mux"
 )
 
@@ -50,6 +52,12 @@ func handleRequest() {
 	router.HandleFunc("/", homePage).Methods("GET")
 	router.HandleFunc("/signUp", signUp).Methods("POST")
 
+	// Dashboard -> Service
+	// Todo: Can't not differentiate between these to GET method
+	//router.HandleFunc("/dashboard/services", controllers.GetServices).Methods("GET")
+	router.HandleFunc("/dashboard/services", controllers.GetServiceById).Methods("GET") // Test done by postman
+
+	fmt.Print("Server start at PORT 10000\n")
 	log.Fatal(http.ListenAndServe(":10000", router))
 }
 
