@@ -28,7 +28,7 @@ func GetServices() ([]*model.Service, *errors.AppError) {
 	}
 }
 
-func GetServicesById(serviceId int64) (*model.Service, *errors.AppError) {
+func GetServiceById(serviceId int64) (*model.Service, *errors.AppError) {
 	for _, item := range services {
 		if item.ID == serviceId {
 			return item, nil

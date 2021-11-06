@@ -11,5 +11,5 @@ func GetServices() ([]*model.Service, *errors.AppError) {
 }
 
 func GetServiceById(serviceId int64) (*model.Service, *errors.AppError) {
-	return dao.GetServicesById(serviceId)
+	return dao.GetServiceById(serviceId)
 }

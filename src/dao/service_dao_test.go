@@ -7,10 +7,12 @@ import (
 	"testing"
 )
 
-func TestGetServicesByIdOnFailScenario(t *testing.T) {
+/** TestGetServiceById */
+
+func TestGetServiceByIdOnFailScenario(t *testing.T) {
 
 	var serviceId int64 = 321321
-	service, err := GetServicesById(serviceId)
+	service, err := GetServiceById(serviceId)
 
 	assert.Nil(t, service)
 	assert.NotNil(t, err)
@@ -20,14 +22,14 @@ func TestGetServicesByIdOnFailScenario(t *testing.T) {
 
 }
 
-func TestGetServicesByIdOnSuccessScenario(t *testing.T) {
+func TestGetServiceByIdOnSuccessScenario(t *testing.T) {
 
 	var httpCode = 200
 
 	var serviceId int64 = 1
 	var serviceTitle = "Wash Machine"
 
-	service, err := GetServicesById(serviceId)
+	service, err := GetServiceById(serviceId)
 
 	assert.Nil(t, err)
 	assert.NotNil(t, service)
