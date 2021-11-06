@@ -20,6 +20,18 @@ func TestGetServicesOnFailScenario(t *testing.T) {
 
 }
 
+func TestGetServicesOnFailSuccess(t *testing.T) {
+
+	servicesLength := 2
+
+	services, err := GetServices()
+
+	assert.Nil(t, err)
+	assert.NotNil(t, services)
+	assert.EqualValues(t, servicesLength, len(services))
+
+}
+
 /** TestGetServiceById */
 
 func TestGetServiceByIdOnFailScenario(t *testing.T) {
