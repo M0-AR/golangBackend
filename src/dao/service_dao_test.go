@@ -20,7 +20,7 @@ func TestGetServicesOnFailScenario(t *testing.T) {
 
 }
 
-func TestGetServicesOnFailSuccess(t *testing.T) {
+func TestGetServicesOnSuccessScenario(t *testing.T) {
 
 	servicesLength := 2
 
