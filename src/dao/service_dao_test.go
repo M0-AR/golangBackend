@@ -19,3 +19,20 @@ func TestGetServicesByIdOnFailScenario(t *testing.T) {
 	assert.EqualValues(t, "Service "+strconv.Itoa(int(serviceId))+" was not found", err.Message)
 
 }
+
+func TestGetServicesByIdOnSuccessScenario(t *testing.T) {
+
+	var httpCode = 200
+
+	var serviceId int64 = 1
+	var serviceTitle = "Wash Machine"
+
+	service, err := GetServicesById(serviceId)
+
+	assert.Nil(t, err)
+	assert.NotNil(t, service)
+	assert.EqualValues(t, httpCode, http.StatusOK)
+	assert.EqualValues(t, serviceId, service.ID)
+	assert.EqualValues(t, serviceTitle, service.Title)
+
+}
