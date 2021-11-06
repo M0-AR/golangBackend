@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/B1gDaddyKane/golangBackend/src/errors"
 	"github.com/B1gDaddyKane/golangBackend/src/services"
+	"github.com/gorilla/mux"
 	"net/http"
 	"strconv"
 )
@@ -29,7 +30,9 @@ func GetServices(response http.ResponseWriter, request *http.Request) {
 func GetServiceById(response http.ResponseWriter, request *http.Request) {
 	fmt.Print("GetServiceById is being invoked\n")
 
-	serviceId, err := strconv.ParseInt(request.URL.Query().Get("id"), 10, 64)
+	params := mux.Vars(request)
+
+	serviceId, err := strconv.ParseInt(params["id"], 10, 64)
 
 	if err != nil {
 
