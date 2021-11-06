@@ -17,9 +17,9 @@ var (
 )
 
 func GetServices() ([]*model.Service, *errors.AppError) {
-	if services != nil {
-		return services, nil
-	}
+	//if services != nil {
+	//	return services, nil
+	//}
 
 	return nil, &errors.AppError{
 		Message:    fmt.Sprintf("Services were not found"),

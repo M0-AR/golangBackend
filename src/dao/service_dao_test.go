@@ -7,6 +7,19 @@ import (
 	"testing"
 )
 
+/** TestGetServices */
+func TestGetServicesOnFailScenario(t *testing.T) {
+
+	services, err := GetServices()
+
+	assert.Nil(t, services)
+	assert.NotNil(t, err)
+	assert.EqualValues(t, http.StatusNotFound, err.StatusCode)
+	assert.EqualValues(t, "not_found", err.Status)
+	assert.EqualValues(t, "Services were not found", err.Message)
+
+}
+
 /** TestGetServiceById */
 
 func TestGetServiceByIdOnFailScenario(t *testing.T) {
