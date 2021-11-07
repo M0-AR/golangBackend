@@ -37,7 +37,7 @@ func (suc ServiceUseCase) GetServices(ctx context.Context) (resp model.GetServic
 
 }
 
-func (suc ServiceUseCase) CreateService(ctx context.Context, req model.Service) (resp bool, err error) {
+func (suc ServiceUseCase) CreateService(ctx context.Context, req model.ServiceRequest) (resp bool, err error) {
 
 	if ctx == nil {
 		ctx = context.Background()
@@ -58,10 +58,10 @@ func (suc ServiceUseCase) CreateService(ctx context.Context, req model.Service) 
 
 }
 
-func (suc ServiceUseCase) UpdateService(ctx context.Context, req model.Service) (resp bool, err error) {
+func (suc ServiceUseCase) UpdateService(ctx context.Context, req model.ServiceRequest) (resp bool, err error) {
 	panic("implement me")
 }
 
-func (suc ServiceUseCase) DeleteService(ctx context.Context, req model.Service) (resp bool, err error) {
+func (suc ServiceUseCase) DeleteService(ctx context.Context, req model.ServiceRequest) (resp bool, err error) {
 	panic("implement me")
 }
