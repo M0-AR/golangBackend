@@ -48,7 +48,7 @@ func (sdao ServiceDAO) GetServices(ctx context.Context) (resp model.GetServicesR
 
 }
 
-func (sdao ServiceDAO) CreateService(ctx context.Context, req model.Service) error {
+func (sdao ServiceDAO) CreateService(ctx context.Context, req model.ServiceRequest) error {
 
 	dataReq := bson.M{
 		"title": req.Title,
@@ -76,10 +76,10 @@ func (sdao ServiceDAO) CreateService(ctx context.Context, req model.Service) err
 
 }
 
-func (sdao ServiceDAO) UpdateService(ctx context.Context, req model.Service) error {
+func (sdao ServiceDAO) UpdateService(ctx context.Context, req model.ServiceRequest) error {
 	panic("implement me")
 }
 
-func (sdao ServiceDAO) DeleteService(ctx context.Context, req model.Service) error {
+func (sdao ServiceDAO) DeleteService(ctx context.Context, req model.ServiceRequest) error {
 	panic("implement me")
 }
