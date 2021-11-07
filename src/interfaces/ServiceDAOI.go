@@ -7,7 +7,7 @@ import (
 
 type ServiceDAOI interface {
 	GetServices(ctx context.Context) (resp model.GetServicesResponse, err error)
-	CreateService(ctx context.Context, req model.Service) error
-	UpdateService(ctx context.Context, req model.Service) error
-	DeleteService(ctx context.Context, req model.Service) error
+	CreateService(ctx context.Context, req model.ServiceRequest) error
+	UpdateService(ctx context.Context, req model.ServiceRequest) error
+	DeleteService(ctx context.Context, req model.ServiceRequest) error
 }
