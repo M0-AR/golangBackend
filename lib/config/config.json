@@ -10,7 +10,7 @@
       "timeout": 5000,
       "host": "0.0.0.0",
       "port": "27017",
-      "dbname": "shopDB",
+      "dbname": "servicesDB",
       "user": "",
       "password": ""
     }
