@@ -7,7 +7,7 @@ import (
 )
 
 func SetConfigFile(name, path, extension string) {
-	viper.SetConfigFile(name)
+	viper.SetConfigName(name)
 	viper.AddConfigPath(path)
 	viper.SetConfigType(extension)
 

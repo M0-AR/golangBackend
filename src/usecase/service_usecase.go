@@ -43,7 +43,7 @@ func (suc ServiceUseCase) CreateService(ctx context.Context, req model.ServiceRe
 		ctx = context.Background()
 	}
 
-	if req.Title == "" {
+	if req.ServiceTitle == "" {
 		err := errors.New("failed to add service, please add service title")
 		logging.Info(err)
 		return false, err

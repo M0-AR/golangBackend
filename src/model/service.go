@@ -1,8 +1,6 @@
 package model
 
-import (
-	"time"
-)
+import "time"
 
 type (
 	GetServicesResponse struct {
@@ -10,20 +8,20 @@ type (
 	}
 
 	Service struct {
-		ID               int64     `json:"id,omitempty" bson:"_id"`
-		Title            string    `json:"title" bson:"title"`
-		Price            float64   `json:"price" bson:"price"`
-		ImageUrl         string    `json:"image_url" bson:"image_url"`
-		IsAvailable      bool      `json:"is_available" bson:"is_available"`
-		ServiceStartDate time.Time `json:"service_start_date" bson:"service_start_date"`
+		ServiceID          string    `json:"service_id,omitempty" bson:"service_id"`
+		ServiceTitle       string    `json:"service_title" bson:"service_title"`
+		ServicePrice       float64   `json:"service_price" bson:"service_price"`
+		ServiceImageUrl    string    `json:"service_image_url" bson:"service_image_url"`
+		ServiceIsAvailable bool      `json:"service_is_available" bson:"service_is_available"`
+		ServiceStartDate   time.Time `json:"service_start_date" bson:"service_start_date"`
 	}
 
 	ServiceRequest struct {
-		ID               int64     `json:"id,omitempty" bson:"_id"`
-		Title            string    `json:"title,omitempty" bson:"title"`
-		Price            float64   `json:"price,omitempty" bson:"price"`
-		ImageUrl         string    `json:"image_url,omitempty" bson:"image_url"`
-		IsAvailable      bool      `json:"is_available,omitempty" bson:"is_available"`
-		ServiceStartDate time.Time `json:"service_start_date,omitempty" bson:"service_start_date"`
+		ServiceID          string    `json:"service_id,omitempty" bson:"service_id"`
+		ServiceTitle       string    `json:"service_title,omitempty" bson:"service_title"`
+		ServicePrice       float64   `json:"service_price,omitempty" bson:"service_price"`
+		ServiceImageUrl    string    `json:"service_image_url,omitempty" bson:"service_image_url"`
+		ServiceIsAvailable bool      `json:"service_is_available,omitempty" bson:"service_is_available"`
+		ServiceStartDate   time.Time `json:"service_start_date,omitempty" bson:"service_start_date"`
 	}
 )
