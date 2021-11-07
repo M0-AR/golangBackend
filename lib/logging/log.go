@@ -11,6 +11,13 @@ func Info(args ...interface{}) {
 	logEntry.Info(args...)
 }
 
+func MiddlewareLogging(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		makeLogEntry(c).Info("incoming request")
+		return next(c)
+	}
+}
+
 func makeLogEntry(c echo.Context) *log.Entry {
 	if c == nil {
 		return log.WithFields(log.Fields{
