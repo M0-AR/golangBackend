@@ -3,17 +3,17 @@ package controllers
 import (
 	"context"
 	"encoding/json"
-	"github.com/B1gDaddyKane/golangBackend/src/interfaces"
 	"github.com/B1gDaddyKane/golangBackend/src/model"
+	"github.com/B1gDaddyKane/golangBackend/src/usecase"
 	"github.com/labstack/echo/v4"
 )
 
 type ServiceController struct {
 	e        *echo.Echo
-	sUseCase interfaces.ServiceUseCaseI
+	sUseCase usecase.ServiceUseCaseI
 }
 
-func NewServiceController(e *echo.Echo, sUseCase interfaces.ServiceUseCaseI) *ServiceController {
+func NewServiceController(e *echo.Echo, sUseCase usecase.ServiceUseCaseI) *ServiceController {
 	return &ServiceController{
 		e:        e,
 		sUseCase: sUseCase,

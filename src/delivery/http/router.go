@@ -2,11 +2,11 @@ package http
 
 import (
 	"github.com/B1gDaddyKane/golangBackend/src/delivery/controllers"
-	"github.com/B1gDaddyKane/golangBackend/src/interfaces"
+	"github.com/B1gDaddyKane/golangBackend/src/usecase"
 	"github.com/labstack/echo/v4"
 )
 
-func NewRouter(e *echo.Echo, serviceUseCase interfaces.ServiceUseCaseI) {
+func NewRouter(e *echo.Echo, serviceUseCase usecase.ServiceUseCaseI) {
 
 	// Dashboard -> Services
 	serviceCtrl := controllers.NewServiceController(e, serviceUseCase)

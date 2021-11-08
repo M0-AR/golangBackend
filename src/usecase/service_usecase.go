@@ -3,7 +3,7 @@ package usecase
 import (
 	"context"
 	"github.com/B1gDaddyKane/golangBackend/lib/logging"
-	"github.com/B1gDaddyKane/golangBackend/src/interfaces"
+	"github.com/B1gDaddyKane/golangBackend/src/dao"
 	"github.com/B1gDaddyKane/golangBackend/src/model"
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
@@ -12,10 +12,10 @@ import (
 
 type ServiceUseCase struct {
 	config     *model.EnvConfig
-	serviceDAO interfaces.ServiceDAOI
+	serviceDAO dao.ServiceDAOI
 }
 
-func NewServiceUseCase(config *model.EnvConfig, serviceDAO interfaces.ServiceDAOI) interfaces.ServiceUseCaseI {
+func NewServiceUseCase(config *model.EnvConfig, serviceDAO dao.ServiceDAOI) ServiceUseCaseI {
 	return &ServiceUseCase{
 		config:     config,
 		serviceDAO: serviceDAO,

@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/B1gDaddyKane/golangBackend/src/interfaces"
 	"github.com/B1gDaddyKane/golangBackend/src/model"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -17,7 +16,7 @@ type ServiceDAO struct {
 	mongoDB *mongo.Database
 }
 
-func NewServiceDAO(mongo *mongo.Database) interfaces.ServiceDAOI {
+func NewServiceDAO(mongo *mongo.Database) ServiceDAOI {
 	return &ServiceDAO{
 		mongoDB: mongo,
 	}
