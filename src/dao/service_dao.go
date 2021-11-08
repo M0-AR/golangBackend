@@ -77,7 +77,18 @@ func (sdao ServiceDAO) CreateService(ctx context.Context, req model.ServiceReque
 }
 
 func (sdao ServiceDAO) UpdateService(ctx context.Context, req model.ServiceRequest) error {
-	panic("implement me")
+
+	updateServiceID := bson.M{"service_id": req.ServiceID}
+	objectID := bson.M{"$set": bson.M{
+		"service_title": req.ServiceTitle,
+	}}
+	_, err := sdao.mongoDB.Collection("services").UpdateOne(ctx, updateServiceID, objectID)
+	if err != nil {
+		log.Println("error ", err)
+	}
+
+	return err
+
 }
 
 func (sdao ServiceDAO) DeleteService(ctx context.Context, req model.ServiceRequest) error {

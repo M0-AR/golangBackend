@@ -14,5 +14,6 @@ func NewRouter(e *echo.Echo, serviceUseCase interfaces.ServiceUseCaseI) {
 	r := e.Group("/api/v1/go-mongo")
 	r.GET("/dashboard/list", serviceCtrl.GetServices)
 	r.POST("/dashboard/add", serviceCtrl.CreateService)
+	r.PUT("/dashboard/edit", serviceCtrl.UpdateService)
 
 }
