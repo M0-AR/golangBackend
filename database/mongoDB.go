@@ -19,7 +19,7 @@ func NewMongoDB(uri string) *MongoDB {
 }
 
 func (db *MongoDB) CreateUser(user UserDB) (*UserDB, error) {
-	collection := Client.Database("tester").Collection("admin")
+	collection := Client.Database("bookUsTest").Collection("users")
 	// creates a timeout context. We give it our context and the timeout amount
 	// _ means we dont handle the cancel callback.
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)

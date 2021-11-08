@@ -14,7 +14,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-var db = database.NewMongoDB("mongodb+srv://admin:admin@bookus0.4yn8c.mongodb.net/BookUs0?retryWrites=true&w=majority")
+var db = database.NewMongoDB("mongodb+srv://user1:pin123@bookus0.4yn8c.mongodb.net/bookUsTest?retryWrites=true&w=majority")
 
 func homePage(res http.ResponseWriter, req *http.Request) {
 
