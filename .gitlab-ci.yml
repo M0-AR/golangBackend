@@ -35,6 +35,8 @@ compile:
   artifacts:
     paths:
       - mybinary
+  only:
+    - main
 
 publish:
   image: docker:latest
@@ -46,6 +48,8 @@ publish:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - docker push $TAG_COMMIT
     - docker push $TAG_LATEST
+  only:
+    - main
 
 deploy:
   image: alpine:latest
