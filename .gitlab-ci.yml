@@ -55,8 +55,8 @@ deploy:
     - apk update && apk add openssh-client
     - ssh -p 22023 -i $ID_ED25519 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
     - ssh -p 22023 -i $ID_ED25519 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull $TAG_COMMIT"
-    - ssh -p 22023 -i $ID_ED25519 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-app || true"
-    - ssh -p 22023 -i $ID_ED25519 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 9003:10000 --name my-app $TAG_COMMIT"
+    - ssh -p 22023 -i $ID_ED25519 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f api-app || true"
+    - ssh -p 22023 -i $ID_ED25519 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 9003:10000 --name api-app $TAG_COMMIT"
   only:
     - main
     - deploy
