@@ -1,15 +1,27 @@
 package model
 
-import (
-	"time"
-)
+import "time"
 
-// Service represents data about a record Service.
-type Service struct {
-	ID               int64     `json:"id"`
-	Title            string    `json:"title"`
-	Price            float64   `json:"price"`
-	ImageUrl         string    `json:"image_url"`
-	IsAvailable      bool      `json:"is_available"`
-	ServiceStartDate time.Time `json:"service_start_date"`
-}
+type (
+	GetServicesResponse struct {
+		Services []Service `json:"services"`
+	}
+
+	Service struct {
+		ServiceID          string    `json:"service_id,omitempty" bson:"service_id"`
+		ServiceTitle       string    `json:"service_title" bson:"service_title"`
+		ServicePrice       float64   `json:"service_price" bson:"service_price"`
+		ServiceImageUrl    string    `json:"service_image_url" bson:"service_image_url"`
+		ServiceIsAvailable bool      `json:"service_is_available" bson:"service_is_available"`
+		ServiceStartDate   time.Time `json:"service_start_date" bson:"service_start_date"`
+	}
+
+	ServiceRequest struct {
+		ServiceID          string    `json:"service_id,omitempty" bson:"service_id"`
+		ServiceTitle       string    `json:"service_title,omitempty" bson:"service_title"`
+		ServicePrice       float64   `json:"service_price,omitempty" bson:"service_price"`
+		ServiceImageUrl    string    `json:"service_image_url,omitempty" bson:"service_image_url"`
+		ServiceIsAvailable bool      `json:"service_is_available,omitempty" bson:"service_is_available"`
+		ServiceStartDate   time.Time `json:"service_start_date,omitempty" bson:"service_start_date"`
+	}
+)
