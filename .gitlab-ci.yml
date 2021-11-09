@@ -69,3 +69,4 @@ deploy:
     - ssh -p 22023 -i $ID_ED25519 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 9003:10000 --name my-app $TAG_COMMIT"
   only:
     - main
+    - deploy
