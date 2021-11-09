@@ -55,7 +55,7 @@ deploy:
   image: alpine:latest
   stage: deploy
   script:
-    - echo "this is $ID_ED25519"
+    - echo "this is" $ID_ED25519
     - cat $ID_ED25519
     - chmod og= $ID_ED25519
     - apk update && apk add openssh-client
