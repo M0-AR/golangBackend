@@ -1,10 +1,10 @@
-package dao
+package dashboard
 
 import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/B1gDaddyKane/golangBackend/src/model"
+	"github.com/B1gDaddyKane/golangBackend/src/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"log"
@@ -22,18 +22,18 @@ func NewServiceDAO(mongo *mongo.Database) ServiceDAOI {
 	}
 }
 
-func (sdao ServiceDAO) GetServices(ctx context.Context) (resp model.GetServicesResponse, err error) {
+func (sdao ServiceDAO) GetServices(ctx context.Context) (resp models.GetServicesResponse, err error) {
 
 	query, err := sdao.mongoDB.Collection("services").Find(ctx, bson.D{})
 	if err != nil {
 		log.Println("error ", err)
-		return model.GetServicesResponse{}, err
+		return models.GetServicesResponse{}, err
 	}
 	defer query.Close(ctx)
 
-	listServices := make([]model.Service, 0)
+	listServices := make([]models.Service, 0)
 	for query.Next(ctx) {
-		var row model.Service
+		var row models.Service
 		err := query.Decode(&row)
 		if err != nil {
 			log.Println("error ", err)
@@ -41,13 +41,13 @@ func (sdao ServiceDAO) GetServices(ctx context.Context) (resp model.GetServicesR
 		listServices = append(listServices, row)
 	}
 
-	resp = model.GetServicesResponse{Services: listServices}
+	resp = models.GetServicesResponse{Services: listServices}
 
 	return resp, err
 
 }
 
-func (sdao ServiceDAO) CreateService(ctx context.Context, req model.ServiceRequest) error {
+func (sdao ServiceDAO) CreateService(ctx context.Context, req models.ServiceRequest) error {
 
 	dataReq := bson.M{ // Todo: add the rest of attributes and for date .Format("2021-01-01 15:05:01")
 		"service_title": req.ServiceTitle,
@@ -64,7 +64,7 @@ func (sdao ServiceDAO) CreateService(ctx context.Context, req model.ServiceReque
 		objectID := bson.M{"$set": bson.M{"service_id": serviceID}}
 		_, err = sdao.mongoDB.Collection("services").UpdateOne(ctx, updateServiceID, objectID)
 		if err != nil {
-			log.Println("error from ServiceDAO.CreateService ", err)
+			log.Println("error from ServiceDAO.CreateUser ", err)
 		}
 	} else {
 		err = errors.New(fmt.Sprint("can't get inserted ID", err))
@@ -75,7 +75,7 @@ func (sdao ServiceDAO) CreateService(ctx context.Context, req model.ServiceReque
 
 }
 
-func (sdao ServiceDAO) UpdateService(ctx context.Context, req model.ServiceRequest) error {
+func (sdao ServiceDAO) UpdateService(ctx context.Context, req models.ServiceRequest) error {
 
 	updateServiceID := bson.M{"service_id": req.ServiceID}
 	objectID := bson.M{"$set": bson.M{
@@ -90,6 +90,6 @@ func (sdao ServiceDAO) UpdateService(ctx context.Context, req model.ServiceReque
 
 }
 
-func (sdao ServiceDAO) DeleteService(ctx context.Context, req model.ServiceRequest) error {
+func (sdao ServiceDAO) DeleteService(ctx context.Context, req models.ServiceRequest) error {
 	panic("implement me")
 }
