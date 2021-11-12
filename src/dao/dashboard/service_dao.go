@@ -4,10 +4,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
+
 	"github.com/B1gDaddyKane/golangBackend/src/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"log"
+
 	//"time"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -91,5 +93,12 @@ func (sdao ServiceDAO) UpdateService(ctx context.Context, req models.ServiceRequ
 }
 
 func (sdao ServiceDAO) DeleteService(ctx context.Context, req models.ServiceRequest) error {
-	panic("implement me")
+
+	deleteServiceID := bson.M{"service_id": req.ServiceID}
+	_, err := sdao.mongoDB.Collection("service").DeleteOne(ctx, deleteServiceID)
+	if err != nil {
+		log.Println("error")
+
+	}
+	return err
 }
