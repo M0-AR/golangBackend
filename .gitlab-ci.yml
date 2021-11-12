@@ -1,30 +1,69 @@
+# To contribute improvements to CI/CD templates, please follow the Development guide at:
+# https://docs.gitlab.com/ee/development/cicd/templates.html
+# This specific template is located at:
+# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Go.gitlab-ci.yml
+
+
+variables:
+  TAG_LATEST: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest
+  TAG_COMMIT: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHORT_SHA
+  # Please edit to your GitLab project
+  REPO_NAME: gitlab.com/devops-dtu/hello
+
+# The problem is that to be able to use go get, one needs to put
+# the repository in the $GOPATH. So for example if your gitlab domain
+# is gitlab.com, and that your repository is namespace/project, and
+# the default GOPATH being /go, then you'd need to have your
+# repository in /go/src/gitlab.com/namespace/project
+# Thus, making a symbolic link corrects this.
+before_script:
+  - mkdir -p $GOPATH/src/$(dirname $REPO_NAME)
+  - ln -svf $CI_PROJECT_DIR $GOPATH/src/$REPO_NAME
+  - cd $GOPATH/src/$REPO_NAME
+
 stages:
-  - compile
-  #- test
+  - build
+#  - test
+  - publish
   - deploy
 
-build:
-  stage: compile
+
+compile:
+  stage: build
   image: golang:latest
   script:
-    - go get -d -v
-    - go build -o bin/golang-gin-poc -v .
+    - go build -race -ldflags "-extldflags '-static'" -o $CI_PROJECT_DIR/mybinary
+  artifacts:
+    paths:
+      - mybinary
 
-#test:
+#format:
 #  stage: test
 #  image: golang:latest
 #  script:
-#    - go test service/*.go
+#    - go fmt $(go list ./... | grep -v /vendor/)
+#    - go vet $(go list ./... | grep -v /vendor/)
+#    - go test -race $(go list ./... | grep -v /vendor/)
 
-staging:
+
+publish:
+  image: docker:latest
+  stage: publish
+  services:
+    - docker:dind
+  script:
+    - docker build -t $TAG_COMMIT -t $TAG_LATEST .
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker push $TAG_COMMIT
+    - docker push $TAG_LATEST
+
+deploy:
+  image: alpine:latest
   stage: deploy
   script:
-    - apt-get update -qy
-    - apt-get install -y ruby-dev
-    - gem install dpl
-    - dpl --provider=heroku --app=golangbackend-00 --api-key=$HEROKU_API_KEY
-  environment:
-    name: Staging
-    url: https://golangbackend-00.herokuapp.com/
-  only:
-    - dashboard-create-service
+    - chmod og= $ID_ED25519
+    - apk update && apk add openssh-client
+    - ssh -p 22023 -i $ID_ED25519 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
+    - ssh -p 22023 -i $ID_ED25519 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull $TAG_COMMIT"
+    - ssh -p 22023 -i $ID_ED25519 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-app || true"
+    - ssh -p 22023 -i $ID_ED25519 -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 9003:10000 --name my-app $TAG_COMMIT"
