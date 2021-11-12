@@ -21,7 +21,7 @@ func MiddlewareLogging(next echo.HandlerFunc) echo.HandlerFunc {
 func makeLogEntry(c echo.Context) *log.Entry {
 	if c == nil {
 		return log.WithFields(log.Fields{
-			"at": time.Now().Format("2021-01-01 15:05:01"),
+			"at": time.Now().Format("2006-01-02 15:04:05"),
 		})
 	}
 
