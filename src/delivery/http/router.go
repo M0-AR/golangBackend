@@ -25,6 +25,7 @@ func NewRouterDashboard(e *echo.Echo, serviceUseCase dashboard.ServiceUseCaseI) 
 	r.GET("/dashboard/list", serviceCtrl.GetServices)
 	r.POST("/dashboard/add", serviceCtrl.CreateService)
 	r.PUT("/dashboard/edit", serviceCtrl.UpdateService)
+	r.DELETE("/dashboard/delete", serviceCtrl.DeleteService)
 
 	//
 

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/B1gDaddyKane/golangBackend/lib/config"
 	"github.com/B1gDaddyKane/golangBackend/lib/db"
 	"github.com/B1gDaddyKane/golangBackend/lib/logging"
@@ -14,9 +15,10 @@ import (
 
 	"net/http"
 
+	"log"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"log"
 )
 
 // To initialize viper config
@@ -25,38 +27,15 @@ func init() {
 }
 
 func main() {
-	envConfig := getConfig()
 
-	e := echo.New()
-	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowHeaders:     []string{"*"},
-		AllowCredentials: true,
-		AllowOrigins:     []string{"*"},
-		AllowMethods:     []string{http.MethodGet, http.MethodHead, http.MethodPut, http.MethodPatch, http.MethodPost, http.MethodDelete},
-	}))
+	err := run()
 
-	e.Use(logging.MiddlewareLogging)
-
-	// Mongo
-	mongo, err := db.Connect(envConfig.Mongo)
 	if err != nil {
-		log.Println(err)
-		return
+		log.Fatal(err)
+		panic(err)
+
 	}
 
-	// Signup
-	signupDAO := signup.NewSignUpDAO(mongo)
-	signupUseCase := signup2.NewSignUpUseCase(&envConfig, signupDAO)
-	// Router
-	httpDelivery.NewRouterSignUp(e, signupUseCase)
-
-	// Dashboard
-	serviceDAO := dashboard.NewServiceDAO(mongo)
-	serviceUseCase := dashboard2.NewServiceUseCase(&envConfig, serviceDAO)
-	// Router
-	httpDelivery.NewRouterDashboard(e, serviceUseCase)
-
-	e.Logger.Fatal(e.Start(fmt.Sprintf("%s%s%v", envConfig.Host, ":", envConfig.Port)))
 }
 
 func getConfig() models.EnvConfig {
@@ -73,4 +52,45 @@ func getConfig() models.EnvConfig {
 			Port:     config.GetString("database.mongodb.port"),
 		},
 	}
+}
+
+// Testing main function
+
+func run() error {
+
+	envConfig := getConfig()
+
+	e := echo.New()
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowHeaders:     []string{"*"},
+		AllowCredentials: true,
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{http.MethodGet, http.MethodHead, http.MethodPut, http.MethodPatch, http.MethodPost, http.MethodDelete},
+	}))
+
+	e.Use(logging.MiddlewareLogging)
+
+	// Mongo
+	mongo, err := db.Connect(envConfig.Mongo)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+
+	// Signup
+	signupDAO := signup.NewSignUpDAO(mongo)
+	signupUseCase := signup2.NewSignUpUseCase(&envConfig, signupDAO)
+	// Router
+	httpDelivery.NewRouterSignUp(e, signupUseCase)
+
+	// Dashboard
+	serviceDAO := dashboard.NewServiceDAO(mongo)
+	serviceUseCase := dashboard2.NewServiceUseCase(&envConfig, serviceDAO)
+	// Router
+	httpDelivery.NewRouterDashboard(e, serviceUseCase)
+
+	e.Logger.Fatal(e.Start(fmt.Sprintf("%s%s%v", envConfig.Host, ":", envConfig.Port)))
+
+	return nil
+
 }
