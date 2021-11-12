@@ -49,8 +49,12 @@ func (sdao ServiceDAO) GetServices(ctx context.Context) (resp models.GetServices
 
 func (sdao ServiceDAO) CreateService(ctx context.Context, req models.ServiceRequest) error {
 
-	dataReq := bson.M{ // Todo: add the rest of attributes and for date .Format("2021-01-01 15:05:01")
-		"service_title": req.ServiceTitle,
+	dataReq := bson.M{
+		"service_title":        req.ServiceTitle,
+		"service_price":        req.ServicePrice,
+		"service_image_url":    req.ServiceImageUrl,
+		"service_is_available": req.ServiceIsAvailable,
+		"service_start_date":   req.ServiceStartDate,
 	}
 
 	query, err := sdao.mongoDB.Collection("services").InsertOne(ctx, dataReq)

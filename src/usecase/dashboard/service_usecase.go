@@ -44,8 +44,8 @@ func (suc ServiceUseCase) CreateService(ctx context.Context, req models.ServiceR
 		ctx = context.Background()
 	}
 
-	if req.ServiceTitle == "" {
-		err := errors.New("failed to add service, please add service title")
+	if req.ServiceTitle == "" || len(req.ServicePrice) < 2 || req.ServiceImageUrl == "" { // Todo: should I validate characters like price should just number
+		err := errors.New("failed to add service, please fill service's attributes")
 		logging.Info(err)
 		return false, err
 	}
