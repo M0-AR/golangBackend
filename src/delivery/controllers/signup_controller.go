@@ -3,6 +3,7 @@ package controllers
 import (
 	"context"
 	"encoding/json"
+
 	"github.com/B1gDaddyKane/golangBackend/src/models"
 	"github.com/B1gDaddyKane/golangBackend/src/usecase/signup"
 	"github.com/labstack/echo/v4"
