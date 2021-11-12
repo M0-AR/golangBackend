@@ -1,4 +1,4 @@
-package dao
+package dashboard
 
 //
 //import (
@@ -11,7 +11,7 @@ package dao
 ///** TestGetServices */
 //func TestGetServicesOnFailScenario(t *testing.T) {
 //
-//	services, err := GetServices()
+//	services, err := GetUser()
 //
 //	assert.Nil(t, services)
 //	assert.NotNil(t, err)
@@ -25,7 +25,7 @@ package dao
 //
 //	servicesLength := 2
 //
-//	services, err := GetServices()
+//	services, err := GetUser()
 //
 //	assert.Nil(t, err)
 //	assert.NotNil(t, services)

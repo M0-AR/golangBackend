@@ -3,17 +3,17 @@ package controllers
 import (
 	"context"
 	"encoding/json"
-	"github.com/B1gDaddyKane/golangBackend/src/model"
-	"github.com/B1gDaddyKane/golangBackend/src/usecase"
+	"github.com/B1gDaddyKane/golangBackend/src/models"
+	"github.com/B1gDaddyKane/golangBackend/src/usecase/dashboard"
 	"github.com/labstack/echo/v4"
 )
 
 type ServiceController struct {
 	e        *echo.Echo
-	sUseCase usecase.ServiceUseCaseI
+	sUseCase dashboard.ServiceUseCaseI
 }
 
-func NewServiceController(e *echo.Echo, sUseCase usecase.ServiceUseCaseI) *ServiceController {
+func NewServiceController(e *echo.Echo, sUseCase dashboard.ServiceUseCaseI) *ServiceController {
 	return &ServiceController{
 		e:        e,
 		sUseCase: sUseCase,
@@ -33,7 +33,7 @@ func (sc *ServiceController) GetServices(ec echo.Context) error {
 
 func (sc *ServiceController) CreateService(ec echo.Context) error {
 
-	var req model.ServiceRequest
+	var req models.ServiceRequest
 	err := json.NewDecoder(ec.Request().Body).Decode(&req)
 	if err != nil {
 		return err
@@ -49,7 +49,7 @@ func (sc *ServiceController) CreateService(ec echo.Context) error {
 
 func (sc *ServiceController) UpdateService(ec echo.Context) error {
 
-	var req model.ServiceRequest
+	var req models.ServiceRequest
 	err := json.NewDecoder(ec.Request().Body).Decode(&req)
 	if err != nil {
 		return nil

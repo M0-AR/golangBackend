@@ -1,28 +1,28 @@
-package usecase
+package dashboard
 
 import (
 	"context"
 	"github.com/B1gDaddyKane/golangBackend/lib/logging"
-	"github.com/B1gDaddyKane/golangBackend/src/dao"
-	"github.com/B1gDaddyKane/golangBackend/src/model"
+	"github.com/B1gDaddyKane/golangBackend/src/dao/dashboard"
+	"github.com/B1gDaddyKane/golangBackend/src/models"
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
 	"log"
 )
 
 type ServiceUseCase struct {
-	config     *model.EnvConfig
-	serviceDAO dao.ServiceDAOI
+	config     *models.EnvConfig
+	serviceDAO dashboard.ServiceDAOI
 }
 
-func NewServiceUseCase(config *model.EnvConfig, serviceDAO dao.ServiceDAOI) ServiceUseCaseI {
+func NewServiceUseCase(config *models.EnvConfig, serviceDAO dashboard.ServiceDAOI) ServiceUseCaseI {
 	return &ServiceUseCase{
 		config:     config,
 		serviceDAO: serviceDAO,
 	}
 }
 
-func (suc ServiceUseCase) GetServices(ctx context.Context) (resp model.GetServicesResponse, err error) {
+func (suc ServiceUseCase) GetServices(ctx context.Context) (resp models.GetServicesResponse, err error) {
 
 	if ctx == nil {
 		ctx = context.Background()
@@ -38,7 +38,7 @@ func (suc ServiceUseCase) GetServices(ctx context.Context) (resp model.GetServic
 
 }
 
-func (suc ServiceUseCase) CreateService(ctx context.Context, req model.ServiceRequest) (resp bool, err error) {
+func (suc ServiceUseCase) CreateService(ctx context.Context, req models.ServiceRequest) (resp bool, err error) {
 
 	if ctx == nil {
 		ctx = context.Background()
@@ -59,7 +59,7 @@ func (suc ServiceUseCase) CreateService(ctx context.Context, req model.ServiceRe
 
 }
 
-func (suc ServiceUseCase) UpdateService(ctx context.Context, req model.ServiceRequest) (resp bool, err error) {
+func (suc ServiceUseCase) UpdateService(ctx context.Context, req models.ServiceRequest) (resp bool, err error) {
 
 	if ctx == nil {
 		ctx = context.Background()
@@ -80,6 +80,6 @@ func (suc ServiceUseCase) UpdateService(ctx context.Context, req model.ServiceRe
 
 }
 
-func (suc ServiceUseCase) DeleteService(ctx context.Context, req model.ServiceRequest) (resp bool, err error) {
+func (suc ServiceUseCase) DeleteService(ctx context.Context, req models.ServiceRequest) (resp bool, err error) {
 	panic("implement me")
 }

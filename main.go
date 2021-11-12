@@ -5,47 +5,19 @@ import (
 	"github.com/B1gDaddyKane/golangBackend/lib/config"
 	"github.com/B1gDaddyKane/golangBackend/lib/db"
 	"github.com/B1gDaddyKane/golangBackend/lib/logging"
-	"github.com/B1gDaddyKane/golangBackend/src/dao"
+	"github.com/B1gDaddyKane/golangBackend/src/dao/dashboard"
+	"github.com/B1gDaddyKane/golangBackend/src/dao/signup"
 	httpDelivery "github.com/B1gDaddyKane/golangBackend/src/delivery/http"
-	"github.com/B1gDaddyKane/golangBackend/src/model"
-	"github.com/B1gDaddyKane/golangBackend/src/usecase"
+	"github.com/B1gDaddyKane/golangBackend/src/models"
+	dashboard2 "github.com/B1gDaddyKane/golangBackend/src/usecase/dashboard"
+	signup2 "github.com/B1gDaddyKane/golangBackend/src/usecase/signup"
+
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"log"
-
-	//"github.com/gorilla/handlers"
-	//"github.com/gorilla/mux"
 	"github.com/labstack/echo/v4/middleware"
+	"log"
 )
-
-//func homePage(w http.ResponseWriter, r *http.Request) {
-//
-//}
-//
-//func signUp(w http.ResponseWriter, r *http.Request) {
-//
-//}
-//
-//func handleRequest() {
-//
-//	router := mux.NewRouter().StrictSlash(true)
-//
-//	router.HandleFunc("/", homePage)
-//	router.HandleFunc("/signUp", signUp)
-//
-//	// Dashboard -> Service
-//	router.HandleFunc("/dashboard/usecase", controllers.GetServices).Methods("GET")
-//	router.HandleFunc("/dashboard/usecase/{id}", controllers.GetServiceById).Methods("GET")
-//
-//	fmt.Print("Server start at PORT 10000\n")
-//
-//	headersOk := handlers.AllowedHeaders([]string{"X-Requested-With"})
-//	originsOk := handlers.AllowedOrigins([]string{os.Getenv("ORIGIN_ALLOWED")})
-//	methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
-//
-//	log.Fatal(http.ListenAndServe(":10000", handlers.CORS(originsOk, headersOk, methodsOk)(router)))
-//}
 
 // To initialize viper config
 func init() {
@@ -53,8 +25,6 @@ func init() {
 }
 
 func main() {
-	//handleRequest()
-
 	envConfig := getConfig()
 
 	e := echo.New()
@@ -74,18 +44,24 @@ func main() {
 		return
 	}
 
-	serviceRepo := dao.NewServiceDAO(mongo)
-	serviceUseCase := usecase.NewServiceUseCase(&envConfig, serviceRepo)
-
+	// Signup
+	signupDAO := signup.NewSignUpDAO(mongo)
+	signupUseCase := signup2.NewSignUpUseCase(&envConfig, signupDAO)
 	// Router
-	httpDelivery.NewRouter(e, serviceUseCase)
+	httpDelivery.NewRouterSignUp(e, signupUseCase)
+
+	// Dashboard
+	serviceDAO := dashboard.NewServiceDAO(mongo)
+	serviceUseCase := dashboard2.NewServiceUseCase(&envConfig, serviceDAO)
+	// Router
+	httpDelivery.NewRouterDashboard(e, serviceUseCase)
 
 	e.Logger.Fatal(e.Start(fmt.Sprintf("%s%s%v", envConfig.Host, ":", envConfig.Port)))
 }
 
-func getConfig() model.EnvConfig {
+func getConfig() models.EnvConfig {
 
-	return model.EnvConfig{
+	return models.EnvConfig{
 		Host: config.GetString("host.address"),
 		Port: config.GetInt("host.port"),
 		Mongo: db.MongoConfig{

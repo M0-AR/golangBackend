@@ -1,4 +1,4 @@
-package model
+package models
 
 import "github.com/B1gDaddyKane/golangBackend/lib/db"
 
