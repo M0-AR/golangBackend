@@ -2,7 +2,7 @@ package models
 
 type (
 	GetUserResponse struct {
-		user User `json:"user"`
+		User User `json:"user"`
 	}
 
 	User struct {

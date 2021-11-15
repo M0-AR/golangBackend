@@ -3,6 +3,7 @@ package controllers
 import (
 	"context"
 	"encoding/json"
+
 	"github.com/B1gDaddyKane/golangBackend/src/models"
 	"github.com/B1gDaddyKane/golangBackend/src/usecase/dashboard"
 	"github.com/labstack/echo/v4"
@@ -60,4 +61,19 @@ func (sc *ServiceController) UpdateService(ec echo.Context) error {
 	}
 
 	return ec.JSON(200, data)
+}
+func (sc *ServiceController) DeleteService(ec echo.Context) error {
+
+	var req models.ServiceRequest
+	err := json.NewDecoder(ec.Request().Body).Decode(&req)
+	if err != nil {
+		return nil
+	}
+	data, err := sc.sUseCase.DeleteService(context.Background(), req)
+	if err != nil {
+		return err
+	}
+
+	return ec.JSON(200, data)
+
 }

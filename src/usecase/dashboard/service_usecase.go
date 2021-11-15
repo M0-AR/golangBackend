@@ -2,12 +2,13 @@ package dashboard
 
 import (
 	"context"
+	"log"
+
 	"github.com/B1gDaddyKane/golangBackend/lib/logging"
 	"github.com/B1gDaddyKane/golangBackend/src/dao/dashboard"
 	"github.com/B1gDaddyKane/golangBackend/src/models"
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
-	"log"
 )
 
 type ServiceUseCase struct {
@@ -81,5 +82,17 @@ func (suc ServiceUseCase) UpdateService(ctx context.Context, req models.ServiceR
 }
 
 func (suc ServiceUseCase) DeleteService(ctx context.Context, req models.ServiceRequest) (resp bool, err error) {
-	panic("implement me")
+
+	if ctx == nil {
+		context.Background()
+
+	}
+
+	err = suc.serviceDAO.DeleteService(ctx, req)
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
+
 }

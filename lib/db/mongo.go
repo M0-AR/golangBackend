@@ -3,13 +3,15 @@ package db
 import (
 	"context"
 	"fmt"
+	"time"
+
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"time"
 )
 
 type MongoConfig struct {
 	Timeout  int
+	Prefix   string
 	DBName   string
 	Username string
 	Password string
@@ -18,7 +20,7 @@ type MongoConfig struct {
 }
 
 func Connect(c MongoConfig) (*mongo.Database, error) {
-	connPattern := "mongodb://%v:%v@%v:%v"
+	connPattern := "mongodb+srv://%v:%v@%v"
 	if c.Username == "" {
 		connPattern = "mongodb://%s%s%v:%v"
 	}
@@ -27,7 +29,6 @@ func Connect(c MongoConfig) (*mongo.Database, error) {
 		c.Username,
 		c.Password,
 		c.Host,
-		c.Port,
 	)
 	clientOptions := options.Client().ApplyURI(clientUrl)
 	client, err := mongo.NewClient(clientOptions)
