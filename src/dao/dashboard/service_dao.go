@@ -85,7 +85,11 @@ func (sdao ServiceDAO) UpdateService(ctx context.Context, req models.ServiceRequ
 
 	updateServiceID := bson.M{"service_id": req.ServiceID}
 	objectID := bson.M{"$set": bson.M{
-		"service_title": req.ServiceTitle,
+		"service_title":        req.ServiceTitle,
+		"service_price":        req.ServicePrice,
+		"service_image_url":    req.ServiceImageUrl,
+		"service_is_available": req.ServiceIsAvailable,
+		"service_start_date":   req.ServiceStartDate,
 	}}
 	_, err := sdao.mongoDB.Collection("services").UpdateOne(ctx, updateServiceID, objectID)
 	if err != nil {
@@ -99,7 +103,7 @@ func (sdao ServiceDAO) UpdateService(ctx context.Context, req models.ServiceRequ
 func (sdao ServiceDAO) DeleteService(ctx context.Context, req models.ServiceRequest) error {
 
 	deleteServiceID := bson.M{"service_id": req.ServiceID}
-	_, err := sdao.mongoDB.Collection("service").DeleteOne(ctx, deleteServiceID)
+	_, err := sdao.mongoDB.Collection("services").DeleteOne(ctx, deleteServiceID)
 	if err != nil {
 		log.Println("error")
 
